@@ -13,4 +13,12 @@
     <string name="quit_text">This will stop your workout. You\'ve come this far, are you sure you want to quit?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="bmi">BMI</string>
+    <string name="calculator">Calculator</string>
+    <string name="weight_in_kg">WEIGHT (in kg)</string>
+    <string name="height_in_cm">HEIGHT (in cm)</string>
+    <string name="your_bmi">YOUR BMI</string>
+    <string name="bmi_value">15.00</string>
+    <string name="normal_bmi">Normal</string>
+    <string name="calculate">CALCULATE</string>
 </resources>
