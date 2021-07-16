@@ -1,5 +1,7 @@
 package com.example.a7minuteworkout
 
+import android.app.Dialog
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_exercise.*
+import kotlinx.android.synthetic.main.dialog_back_button.*
 import org.w3c.dom.Text
 import java.lang.Exception
 import java.util.*
@@ -19,9 +22,11 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var restTimer: CountDownTimer? = null
     private var restProgress: Int = 0
+    private val restTimerDuration = 10
 
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress: Int = 0
+    private val exerciseTimerDuration = 30
 
     private var exerciseList: ArrayList<ExerciseModel>? = null
     private var currentExercisePosition: Int = -1
@@ -39,7 +44,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         toolbar_exercise_activity.setNavigationOnClickListener {
-            onBackPressed()
+            customDialogForBackButton()
         }
 
         tts = TextToSpeech(this, this)
@@ -75,11 +80,11 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setRestProgressBar() {
         progressBar.progress = restProgress
-        restTimer = object : CountDownTimer(10000, 1000) {
+        restTimer = object : CountDownTimer(restTimerDuration*1000L, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 restProgress++
-                progressBar.progress = 10 - restProgress
-                tvTimer.text = (10 - restProgress).toString()
+                progressBar.progress = restTimerDuration - restProgress
+                tvTimer.text = (restTimerDuration - restProgress).toString()
             }
 
             override fun onFinish() {
@@ -117,11 +122,11 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setExerciseProgressBar() {
         progressBarExercise.progress = exerciseProgress
-        exerciseTimer = object : CountDownTimer(30000, 1000) {
+        exerciseTimer = object : CountDownTimer(exerciseTimerDuration*1000L, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 exerciseProgress++
-                progressBarExercise.progress = 30 - exerciseProgress
-                tvExerciseTimer.text = (30 - exerciseProgress).toString()
+                progressBarExercise.progress = exerciseTimerDuration - exerciseProgress
+                tvExerciseTimer.text = (exerciseTimerDuration - exerciseProgress).toString()
             }
 
             override fun onFinish() {
@@ -131,11 +136,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     exerciseAdapter!!.notifyDataSetChanged()
                     setupRestView()
                 } else {
-                    Toast.makeText(
-                        this@ExerciseActivity,
-                        "Congratulations! You have completed 7 minute workout.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    finish()
+                    startActivity(Intent(this@ExerciseActivity, FinishActivity::class.java))
                 }
             }
         }.start()
@@ -178,5 +180,21 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         rvExerciseStatus.adapter = exerciseAdapter
         rvExerciseStatus.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun customDialogForBackButton() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_back_button)
+
+        dialog.btnYes.setOnClickListener {
+            finish()
+            dialog.dismiss()
+        }
+
+        dialog.btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }
