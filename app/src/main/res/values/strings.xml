@@ -21,4 +21,8 @@
     <string name="bmi_value">15.00</string>
     <string name="normal_bmi">Normal</string>
     <string name="calculate">CALCULATE</string>
+    <string name="metric_units">METRIC UNITS</string>
+    <string name="us_units">US UNITS</string>
+    <string name="weight_in_lbs">WEIGHT (in lbs)</string>
+    <string name="history">History</string>
 </resources>
