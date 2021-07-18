@@ -25,4 +25,6 @@
     <string name="us_units">US UNITS</string>
     <string name="weight_in_lbs">WEIGHT (in lbs)</string>
     <string name="history">History</string>
+    <string name="no_data_available">NO DATA AVAILABLE</string>
+    <string name="exercise_completed">EXERCISE COMPLETED</string>
 </resources>
